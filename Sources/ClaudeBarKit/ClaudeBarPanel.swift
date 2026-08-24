@@ -27,8 +27,6 @@ public struct ClaudeBarPanel: View {
         self.onQuit = onQuit
     }
 
-    private var glass: Glass { reduceTransparency ? .regular : .clear }
-
     public var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             if let snapshot = reader.snapshot {
@@ -46,7 +44,7 @@ public struct ClaudeBarPanel: View {
         .padding(.top, 16)
         .padding(.bottom, 14)
         .frame(width: Layout.panelWidth)
-        .glassEffect(glass, in: .rect(cornerRadius: Theme.panelCornerRadius))
+        .glassSurface()
     }
 
     /// The accent is driven by the 5-hour window, because that's the constraint that bites.

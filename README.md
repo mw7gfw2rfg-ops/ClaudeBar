@@ -87,3 +87,34 @@ swift test
 
 The test fixture is a real payload captured from a live session rather than a hand-invented
 shape, so a field rename upstream fails the suite instead of silently zeroing the display.
+
+## Known limits and next steps
+
+**The data source is a third-party implementation detail.** `last_stdin.json` is, by its
+name, a cache — `claude-statusbar` could rename it, wrap it, or write only on change and
+break this app without ever knowing it exists. It also means ClaudeBar only works for people
+running that particular status line.
+
+Verified today: it writes *unconditionally* every tick (mtime advances even when the payload
+is byte-identical), so judging freshness from mtime is sound. If that ever changes to
+write-on-change, mtime would stall while the data was still valid and a live reading would be
+dimmed — worth re-checking if the staleness indicator starts misbehaving.
+
+**The hedge, not yet built:** Claude Code hands its payload to *whatever* status line command
+is configured. The robust move is to be that command — a small shim that writes the payload
+into ClaudeBar's own Application Support directory and then forwards stdin verbatim to the
+user's previous status line, passing its stdout and exit code through unchanged. That
+composes instead of displacing, so adopting ClaudeBar wouldn't cost anyone their existing
+status line. It collapses three dependencies into one on Claude Code's documented integration
+point. Not done here because it edits `~/.claude/settings.json`, which isn't something to do
+unasked.
+
+**Also worth doing first:** put a `UsageSnapshotSource` protocol at the boundary with today's
+file reader as one implementation, so swapping transport is a one-liner. The parsing is
+already isolated from the views — every field degrades independently and only a payload that
+isn't JSON at all throws.
+
+**What the tests can't see.** The 14 tests exercise parsing against a captured fixture. They
+are structurally incapable of noticing the file moving, the upstream format changing, or the
+tool not being installed — which is the actual risk. Green here is not evidence about the
+integration, only about the parser.
