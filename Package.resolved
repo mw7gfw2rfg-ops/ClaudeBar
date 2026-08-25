@@ -1,0 +1,15 @@
+{
+  "originHash" : "9d33a044467e186ae8ebd7ba642ee6e21f17e94e5f74c130903c25abd95847f3",
+  "pins" : [
+    {
+      "identity" : "glasskit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/mw7gfw2rfg-ops/GlassKit.git",
+      "state" : {
+        "revision" : "5a017285fb751d916e3b2400ff410a75183b1bcf",
+        "version" : "1.0.0"
+      }
+    }
+  ],
+  "version" : 3
+}
