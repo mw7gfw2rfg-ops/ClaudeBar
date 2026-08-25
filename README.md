@@ -1,6 +1,6 @@
 # ClaudeBar
 
-Claude Code usage and limits in the macOS menu bar, in [GlassKit](../GlassKit)'s visual
+Claude Code usage and limits in the macOS menu bar, in [GlassKit](https://github.com/mw7gfw2rfg-ops/GlassKit)'s visual
 language.
 
 ![the panel](docs/panel.png)
